@@ -12,6 +12,8 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+permissions: write-all
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build:
@@ -55,3 +57,22 @@ jobs:
         with:
           name: Build
           path: build
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Artifacts
+        uses: actions/download-artifacts@v3
+        with:
+          name: Build
+          path: build
+      - name: Upload build
+        uses: XPH0816/webdav-deploy-action@v0.3
+        with:
+          url: ${{ secrets.WEBDAV_URL }}
+          username: ${{ secrets.WEBDAV_USERNAME }}
+          password: ${{ secrets.WEBDAV_PASSWORD }}
+          local: "./build"
+          remote: "gmtk2023/"
+          method: "copy"
