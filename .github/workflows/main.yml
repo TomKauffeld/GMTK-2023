@@ -74,6 +74,6 @@ jobs:
           url: ${{ secrets.WEBDAV_URL }}
           username: ${{ secrets.WEBDAV_USERNAME }}
           password: ${{ secrets.WEBDAV_PASSWORD }}
-          local: "./build"
+          local: "./build/WebGL/WebGL/"
           remote: "gmtk2023/"
           method: "copy"
