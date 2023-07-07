@@ -1,31 +1,25 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Assets.Scripts.Core;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class MyLevel : MonoBehaviour
+public class MyLevel : MyMonoBehavior
 {
-    public Action OnGameFinished;
-
     public Transform PlayerSpawn;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        MyTarget[] targets = GetComponentsInChildren<MyTarget>();
-        foreach (MyTarget target in targets)
-            target.OnPlayerHit += OnPlayerHitsTarget;
+        MyEventHandler.OnPlayerHitsTarget += OnPlayerHitsTarget;
     }
 
-    private void OnPlayerHitsTarget(PlayerController controller)
+    private void OnPlayerHitsTarget(MyTarget target, PlayerController player)
     {
-        OnGameFinished?.Invoke();
+        MyEventHandler?.CallOnLevelCompleted(this);
     }
+
 
     private void OnDestroy()
     {
-        MyTarget[] targets = GetComponentsInChildren<MyTarget>();
-        foreach (MyTarget target in targets)
-            target.OnPlayerHit -= OnPlayerHitsTarget;
+        if (MyEventHandler != null && !MyEventHandler.IsDestroyed())
+            MyEventHandler.OnPlayerHitsTarget -= OnPlayerHitsTarget;
     }
 }

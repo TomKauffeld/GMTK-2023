@@ -1,15 +1,11 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using Assets.Scripts.Core;
 using UnityEngine;
 
-public class MyTarget : MonoBehaviour
+public class MyTarget : MyMonoBehavior
 {
-    public Action<PlayerController> OnPlayerHit;
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out PlayerController controller))
-            OnPlayerHit?.Invoke(controller);
+            MyEventHandler?.CallOnPlayerHitsTarget(this, controller);
     }
 }

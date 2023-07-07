@@ -1,9 +1,7 @@
+using Assets.Scripts.Core;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-public class MyGameController : MonoBehaviour
+public class MyGameController : MyMonoBehavior
 {
     public MyLevel[] Levels = Array.Empty<MyLevel>();
     public PlayerController Player;
@@ -15,52 +13,45 @@ public class MyGameController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        MyEventHandler.OnLevelCompleted += OnLevelCompleted;
         LoadLevel(0);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnLevelCompleted(MyLevel level)
     {
-        
+        MyEventHandler.ShowMessage("We Won");
+        if (!LoadLevel(this.level + 1))
+            MyEventHandler.CallOnGameFinished();
     }
 
-    private void OnLevelWon()
+    public bool LoadLevel(int level)
     {
-        Debug.Log("WE WON");
-        LoadLevel(level + 1);
-    }
-
-    public void LoadLevel(int level)
-    {
-        Debug.Log("Load level " + level);
         if (level >= 0 && level < Levels.Length)
         {
             LoadLevel(Levels[level]);
             this.level = level;
+            return true;
         }
-        else
-            UnloadLevel();
+        UnloadLevel();
+        return false;
     }
 
 
     public void LoadLevel(MyLevel level)
     {
         UnloadLevel();
-        Debug.Log("Load Level");
         LoadedLevel = Instantiate(level, transform);
-        LoadedLevel.OnGameFinished += OnLevelWon;
         if (LoadedLevel.TryGetComponent(out LevelController levelController))
             levelController.Target = Player.transform;
         Player.transform.position = LoadedLevel.PlayerSpawn.position;
         Player.gameObject.SetActive(true);
+        MyEventHandler.CallOnLevelLoaded(LoadedLevel);
     }
 
     public void UnloadLevel()
     {
-        Debug.Log("Unload Level");
         if (LoadedLevel == null)
             return;
-        LoadedLevel.OnGameFinished -= OnLevelWon;
         Destroy(LoadedLevel.gameObject); 
         LoadedLevel = null;
         Player.gameObject.SetActive(false);
