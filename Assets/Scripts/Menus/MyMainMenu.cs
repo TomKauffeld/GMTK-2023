@@ -1,4 +1,7 @@
 ﻿using Assets.Scripts.Core;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Menus
 {
@@ -6,10 +9,11 @@ namespace Assets.Scripts.Menus
     {
         public MyAboutMenu AboutMenu;
         public MySettingsMenu SettingsMenu;
+        public string GameScene;
 
         public void OnPlayClick()
         {
-
+            SceneManager.LoadScene(GameScene, LoadSceneMode.Single);
         }
 
         public void OnContinueClick()
@@ -28,7 +32,12 @@ namespace Assets.Scripts.Menus
         }
 
         public void OnExitClick() 
-        { 
+        {
+#if UNITY_EDITOR
+            EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
         }
     }
 }

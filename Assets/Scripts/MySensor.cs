@@ -13,14 +13,20 @@ public class MySensor : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        ++hits;
-        ++Hits;
+        if (!other.isTrigger)
+        {
+            ++hits;
+            ++Hits;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        --hits;
-        --Hits;
+        if (!other.isTrigger)
+        {
+            --hits;
+            --Hits;
+        }
     }
 
 
