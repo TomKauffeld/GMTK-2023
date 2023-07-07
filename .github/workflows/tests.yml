@@ -1,11 +1,8 @@
 
-name: Build Unity
+name: Test Unity
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-    branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
@@ -42,38 +39,8 @@ jobs:
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
 
-      # Build
-      - name: Build project
-        uses: game-ci/unity-builder@v2
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-        with:
-          targetPlatform: WebGL
-          allowDirtyBuild: true
-
       # Output
       - uses: actions/upload-artifact@v2
         with:
           name: Build
           path: build
-  deploy:
-    name: Deploy
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Get Artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: Build
-          path: build
-      - name: Upload build
-        uses: XPH0816/webdav-deploy-action@v0.3
-        with:
-          url: ${{ secrets.WEBDAV_URL }}
-          username: ${{ secrets.WEBDAV_USERNAME }}
-          password: ${{ secrets.WEBDAV_PASSWORD }}
-          local: "./build/WebGL/WebGL/"
-          remote: "gmtk2023/"
-          method: "copy"
