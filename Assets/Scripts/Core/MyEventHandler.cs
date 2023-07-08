@@ -2,12 +2,15 @@ using Assets.Scripts.HUD;
 using Assets.Scripts.Player;
 using System;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Core
 {
     public class MyEventHandler : MonoBehaviour
     {
+        public event Action OnChangeToMainMenu;
+        public event Action OnChangeToMainGame;
+
         public event Action<Message> OnMessage;
         public event Action<Message> OnMessageDone;
 
@@ -61,6 +64,16 @@ namespace Assets.Scripts.Core
         public void Play()
         {
             OnPlay?.Invoke();
+        }
+
+        public void LoadMainMenu()
+        {
+            OnChangeToMainMenu?.Invoke();
+        }
+
+        public void LoadMainGame()
+        {
+            OnChangeToMainGame?.Invoke();
         }
     }
 }

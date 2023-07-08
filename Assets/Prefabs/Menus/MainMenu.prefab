@@ -478,6 +478,7 @@ GameObject:
   - component: {fileID: 5880235625948116313}
   - component: {fileID: 5745481345471309669}
   - component: {fileID: 8097807545367671164}
+  - component: {fileID: 104345713082046493}
   m_Layer: 0
   m_Name: ContinueButton
   m_TagString: Untagged
@@ -600,6 +601,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &104345713082046493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2620684361702758422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58520d14b0943f24ea8a90744b8bcd7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2761699606554422425
 GameObject:
   m_ObjectHideFlags: 0
