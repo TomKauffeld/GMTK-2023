@@ -21,6 +21,14 @@ namespace Assets.Scripts.Player
             base.Start();
             PlayerState = GetComponent<PlayerState>();
             Rigidbody = GetComponent<Rigidbody>();
+            if (ForwardSensor)
+                ForwardSensor.OnContact += ForwardSensorOnContact;
+        }
+
+        private void ForwardSensorOnContact()
+        {
+            if (MyEventHandler)
+                MyEventHandler.CallOnHitsWall();
         }
 
         private void Update()

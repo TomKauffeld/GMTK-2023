@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -6,6 +7,8 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class MySensor : MonoBehaviour
 {
+    public event Action OnContact;
+
     private const float GC_TIME = 0.5f;
     private float untilNextClean = GC_TIME;
 
@@ -32,7 +35,12 @@ public class MySensor : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (!other.isTrigger && !Contacts.Contains(other))
+        {
+            bool inContact = InContact;
             Contacts.Add(other);
+            if (!inContact)
+                OnContact?.Invoke();
+        }
     }
 
     private void OnTriggerExit(Collider other)
