@@ -34,7 +34,7 @@ namespace Assets.Scripts.Menus
         {
 #if UNITY_EDITOR
             EditorApplication.isPlaying = false;
-#else
+#elif !PLATFORM_WEBGL
             Application.Quit();
 #endif
         }
