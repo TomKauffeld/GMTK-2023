@@ -2,18 +2,24 @@ using Assets.Scripts.HUD;
 using Assets.Scripts.Player;
 using System;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Core
 {
     public class MyEventHandler : MonoBehaviour
     {
+        public event Action OnChangeToMainMenu;
+        public event Action OnChangeToMainGame;
+
         public event Action<Message> OnMessage;
         public event Action<Message> OnMessageDone;
 
         public event Action<MyLevel> OnLevelLoaded;
         public event Action<MyLevel> OnLevelCompleted;
         public event Action OnGameFinished;
+
+        public event Action OnPause;
+        public event Action OnPlay;
 
         public event Action<MyTarget, PlayerController> OnPlayerHitsTarget;
 
@@ -48,6 +54,26 @@ namespace Assets.Scripts.Core
         public void CallOnGameFinished()
         {
             OnGameFinished?.Invoke();
+        }
+
+        public void Pause()
+        {
+            OnPause?.Invoke();
+        }
+
+        public void Play()
+        {
+            OnPlay?.Invoke();
+        }
+
+        public void LoadMainMenu()
+        {
+            OnChangeToMainMenu?.Invoke();
+        }
+
+        public void LoadMainGame()
+        {
+            OnChangeToMainGame?.Invoke();
         }
     }
 }

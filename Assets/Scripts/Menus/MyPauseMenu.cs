@@ -1,23 +1,22 @@
 ﻿using Assets.Scripts.Core;
-using UnityEditor;
+using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Menus
 {
-    public class MyMainMenu : MyMenu
+    public class MyPauseMenu : MyMenu
     {
         public MyAboutMenu AboutMenu;
         public MySettingsMenu SettingsMenu;
-        public string GameScene;
+        public string MainMenuScene;
 
-        public void OnPlayClick()
+        public void OnReturnClick()
         {
-            MySettings.NextLevel = 0;
-            MyEventHandler.LoadMainGame();
+            MyEventHandler.LoadMainMenu();
         }
 
         public void OnContinueClick()
         {
-            MyEventHandler.LoadMainGame();
+            MyEventHandler.Play();
         }
 
         public void OnSettingsClick()
@@ -28,15 +27,6 @@ namespace Assets.Scripts.Menus
         public void OnAboutClick()
         {
             ChangeMenu(AboutMenu, this);
-        }
-
-        public void OnExitClick() 
-        {
-#if UNITY_EDITOR
-            EditorApplication.isPlaying = false;
-#elif !PLATFORM_WEBGL
-            Application.Quit();
-#endif
         }
     }
 }

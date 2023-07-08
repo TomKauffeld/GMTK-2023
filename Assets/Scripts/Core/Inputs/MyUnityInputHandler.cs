@@ -16,6 +16,8 @@ namespace Assets.Scripts.Core.Inputs
             { KeyCode.LeftArrow, Actions.ROTATE_LEFT },
             { KeyCode.UpArrow, Actions.ROTATE_RIGHT },
             { KeyCode.DownArrow, Actions.ROTATE_LEFT },
+            { KeyCode.P, Actions.PAUSE },
+            { KeyCode.Escape, Actions.PAUSE },
         };
 
 

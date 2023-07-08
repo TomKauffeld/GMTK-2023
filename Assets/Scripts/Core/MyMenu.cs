@@ -4,8 +4,11 @@ using UnityEngine;
 
 namespace Assets.Scripts.Core
 {
-    public class MyMenu : MonoBehaviour
+    public class MyMenu : MyMonoBehaviour
     {
+
+        public MyMenu ReturnMenu { get; set; }
+
         private MyMenuManager menuManager = null;
         public MyMenuManager MenuManager
         {
@@ -17,37 +20,30 @@ namespace Assets.Scripts.Core
             }
         }
 
-        public bool ChangeMenu(string menuName)
+        public bool ChangeMenu(string menuName, MyMenu returnMenu = null)
         {
             if (MenuManager != null)
-                return MenuManager.ChangeMenu(menuName);
+                return MenuManager.ChangeMenu(menuName, returnMenu);
             return false;
         }
 
-        public bool ChangeMenu(ushort index)
+        public bool ChangeMenu(ushort index, MyMenu returnMenu = null)
         {
             if (MenuManager != null)
-                return MenuManager.ChangeMenu(index);
+                return MenuManager.ChangeMenu(index, returnMenu);
             return false;
         }
 
-        public bool ChangeMenu(MyMenu menu)
+        public bool ChangeMenu(MyMenu menu, MyMenu returnMenu = null)
         {
             if (MenuManager != null)
-                return MenuManager.ChangeMenu(menu);
+                return MenuManager.ChangeMenu(menu, returnMenu);
             return false;
         }
 
-        // Start is called before the first frame update
-        void Start()
+        public bool GoBack()
         {
-
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
+            return ChangeMenu(ReturnMenu, this);
         }
     }
 }

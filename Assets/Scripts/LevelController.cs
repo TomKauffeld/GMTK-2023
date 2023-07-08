@@ -2,7 +2,7 @@ using Assets.Scripts.Core;
 using Assets.Scripts.Core.Inputs;
 using UnityEngine;
 
-public class LevelController : MyMonoBehavior
+public class LevelController : MyMonoBehaviour
 {
     public Transform Target;
     public float rotateAmount = 90;

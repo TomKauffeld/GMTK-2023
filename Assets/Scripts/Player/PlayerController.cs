@@ -1,3 +1,4 @@
+using Assets.Scripts.Core;
 using UnityEngine;
 
 
@@ -5,25 +6,43 @@ namespace Assets.Scripts.Player
 {
 
     [RequireComponent(typeof(PlayerState))]
-    public class PlayerController : MonoBehaviour
+    [RequireComponent(typeof(Rigidbody))]
+    public class PlayerController : MyMonoBehaviour
     {
+        public bool Freeze;
         public float speed;
         public MySensor ForwardSensor;
         public MySensor FeetSensor;
         private PlayerState PlayerState;
+        private Rigidbody Rigidbody;
 
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
             PlayerState = GetComponent<PlayerState>();
+            Rigidbody = GetComponent<Rigidbody>();
         }
 
         private void Update()
         {
             PlayerState.State = PlayerState.StateEnum.IDLE;
+            if (Freeze || Paused)
+            {
+                Rigidbody.Sleep();
+                return;
+            }
+
             if (FeetSensor == null || !FeetSensor.InContact)
                 PlayerState.State |= PlayerState.StateEnum.FALLING;
             else if (ForwardSensor != null && !ForwardSensor.InContact)
                 PlayerState.State |= PlayerState.StateEnum.WALKING;
+        }
+
+        protected override void OnPlay()
+        {
+            base.OnPlay();
+            if (!Freeze)
+                Rigidbody.WakeUp();
         }
 
 
