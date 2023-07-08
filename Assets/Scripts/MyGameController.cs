@@ -19,10 +19,21 @@ public class MyGameController : MyMonoBehaviour
         base.Start();
         MyEventHandler.OnLevelCompleted += OnLevelCompleted;
         MyEventHandler.OnLevelLoaded += OnLevelLoaded;
-        LoadLevel(0);
+        MyEventHandler.OnGameFinished += OnGameFinished;
+        LoadLevel(MySettings.NextLevel);
         MyEventHandler.Play();
     }
 
+    private void OnGameFinished()
+    {
+        StartCoroutine(DisplayEndGame());
+    }
+
+    private IEnumerator DisplayEndGame()
+    {
+        yield return new WaitForMessage(MyEventHandler.ShowMessage("You finished the game, sadly we don't have any more levels"));
+        MyEventHandler.LoadMainMenu();
+    }
 
     protected override void OnDestroy()
     {
@@ -59,6 +70,7 @@ public class MyGameController : MyMonoBehaviour
         {
             LoadLevel(Levels[level]);
             this.level = level;
+            MySettings.NextLevel = level;
             return true;
         }
         UnloadLevel();

@@ -1,7 +1,5 @@
 ﻿using Assets.Scripts.Core;
 using UnityEditor;
-using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Assets.Scripts.Menus
 {
@@ -13,12 +11,13 @@ namespace Assets.Scripts.Menus
 
         public void OnPlayClick()
         {
-            SceneManager.LoadScene(GameScene, LoadSceneMode.Single);
+            MySettings.NextLevel = 0;
+            MyEventHandler.LoadMainGame();
         }
 
         public void OnContinueClick()
         {
-
+            MyEventHandler.LoadMainGame();
         }
 
         public void OnSettingsClick()

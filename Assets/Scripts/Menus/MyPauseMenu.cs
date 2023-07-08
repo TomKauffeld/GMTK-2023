@@ -11,7 +11,7 @@ namespace Assets.Scripts.Menus
 
         public void OnReturnClick()
         {
-            SceneManager.LoadScene(MainMenuScene, LoadSceneMode.Single);
+            MyEventHandler.LoadMainMenu();
         }
 
         public void OnContinueClick()

@@ -7,6 +7,7 @@ namespace Assets.Scripts.Core
     {
         private MyEventHandler myEventHandler;
         private AMyInputHandler myInputHandler;
+        private MySettings mySettings;
         public bool Paused { get; private set; } = false;
 
         protected MyEventHandler MyEventHandler
@@ -28,6 +29,17 @@ namespace Assets.Scripts.Core
                     myInputHandler = FindObjectOfType<AMyInputHandler>();
 
                 return myInputHandler;
+            }
+        }
+
+        protected MySettings MySettings
+        {
+            get
+            {
+                if (mySettings == null)
+                    mySettings = FindObjectOfType<MySettings>();
+
+                return mySettings;
             }
         }
 
