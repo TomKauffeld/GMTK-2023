@@ -179,7 +179,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ce11a1f4f1805543b9f84afe5b3d974, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ReturnMenu: {fileID: 1953010833839014698, guid: fe3ae9c5c02a1704ea8a46f75888657f, type: 3}
 --- !u!1 &4028941218858873239
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,9 +245,20 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Made by:
+  m_text: 'Main Developper:
 
-    Ukhando Ithunzi'
+    Ukhando Ithunzi
+
+
+    Models and Animation:
+
+    MayTheGhost
+
+
+    Moral
+    Support:
+
+    Twitch Chat'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
