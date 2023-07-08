@@ -21,6 +21,8 @@ namespace Assets.Scripts.Core
         public event Action OnPause;
         public event Action OnPlay;
 
+        public event Action OnHitsWall;
+
         public event Action<MyTarget, PlayerController> OnPlayerHitsTarget;
 
         public void ShowMessage(Message message)
@@ -74,6 +76,11 @@ namespace Assets.Scripts.Core
         public void LoadMainGame()
         {
             OnChangeToMainGame?.Invoke();
+        }
+
+        public void CallOnHitsWall()
+        {
+            OnHitsWall?.Invoke();
         }
     }
 }
