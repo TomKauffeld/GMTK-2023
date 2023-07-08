@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Scripts.Core.Inputs
@@ -9,23 +10,46 @@ namespace Assets.Scripts.Core.Inputs
         private List<Actions> LastActions = new();
         private List<Actions> CurrentActions = new();
 
-
-        private readonly Dictionary<KeyCode, Actions> Inputs = new()
+        private readonly Dictionary<KeyCode, Actions> InputInverseRotationInactive = new()
         {
             { KeyCode.RightArrow, Actions.ROTATE_RIGHT },
             { KeyCode.LeftArrow, Actions.ROTATE_LEFT },
             { KeyCode.UpArrow, Actions.ROTATE_RIGHT },
             { KeyCode.DownArrow, Actions.ROTATE_LEFT },
+        };
+
+        private readonly Dictionary<KeyCode, Actions> InputInverseRotationActive = new()
+        {
+            { KeyCode.RightArrow, Actions.ROTATE_LEFT },
+            { KeyCode.LeftArrow, Actions.ROTATE_RIGHT },
+            { KeyCode.UpArrow, Actions.ROTATE_LEFT },
+            { KeyCode.DownArrow, Actions.ROTATE_RIGHT },
+        };
+
+        private readonly Dictionary<KeyCode, Actions> Inputs = new()
+        {
             { KeyCode.P, Actions.PAUSE },
             { KeyCode.Escape, Actions.PAUSE },
         };
+
+        public Dictionary<KeyCode, Actions> GetInputs()
+        {
+            Dictionary<KeyCode, Actions> inputs = new(Inputs);
+            if (MySettings.InverseRotation)
+                inputs.AddRange(InputInverseRotationActive);
+            else
+                inputs.AddRange(InputInverseRotationInactive);
+
+
+            return inputs;
+        }
 
 
         private void Update()
         {
             LastActions = CurrentActions;
             CurrentActions = new();
-            foreach (KeyValuePair<KeyCode, Actions> input in Inputs)
+            foreach (KeyValuePair<KeyCode, Actions> input in GetInputs())
             {
                 if (Input.GetKey(input.Key) && !CurrentActions.Contains(input.Value))
                     CurrentActions.Add(input.Value);
