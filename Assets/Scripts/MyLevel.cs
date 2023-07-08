@@ -1,5 +1,6 @@
 using Assets.Scripts.Core;
 using Assets.Scripts.Levels;
+using Assets.Scripts.Player;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
