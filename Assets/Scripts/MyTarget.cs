@@ -1,4 +1,5 @@
 using Assets.Scripts.Core;
+using Assets.Scripts.Player;
 using UnityEngine;
 
 public class MyTarget : MyMonoBehavior

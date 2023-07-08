@@ -1,4 +1,5 @@
 using Assets.Scripts.HUD;
+using Assets.Scripts.Player;
 using System;
 using UnityEngine;
 
