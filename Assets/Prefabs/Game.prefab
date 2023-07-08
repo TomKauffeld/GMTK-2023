@@ -49,6 +49,7 @@ MonoBehaviour:
   - {fileID: 2469691879726287239, guid: 037be65da9bad4b4b84ba21fbe25c058, type: 3}
   - {fileID: 734980958703758052, guid: 978c9c81ab3594b4182c623f1f6e108a, type: 3}
   - {fileID: 2091828889171725942, guid: 4b7a58a4c21c3f34da6af0d608394c78, type: 3}
+  - {fileID: 457532373832892711, guid: adf0601ac79b4244e8f05eb1582aae36, type: 3}
   Player: {fileID: 3616376249611799816}
 --- !u!1001 &6636054464556186823
 PrefabInstance:

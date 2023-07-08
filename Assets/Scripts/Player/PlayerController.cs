@@ -9,7 +9,18 @@ namespace Assets.Scripts.Player
     [RequireComponent(typeof(Rigidbody))]
     public class PlayerController : MyMonoBehaviour
     {
-        public bool Freeze;
+        private bool freeze;
+        public bool Freeze
+        {
+            get => freeze;
+            set
+            {
+                if (freeze && !value && !Paused && Rigidbody)
+                    Rigidbody.WakeUp();
+                freeze = value;
+            }
+        }
+
         public float speed;
         public MySensor ForwardSensor;
         public MySensor FeetSensor;
@@ -49,7 +60,7 @@ namespace Assets.Scripts.Player
         protected override void OnPlay()
         {
             base.OnPlay();
-            if (!Freeze)
+            if (!Freeze && Rigidbody)
                 Rigidbody.WakeUp();
         }
 

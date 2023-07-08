@@ -5,7 +5,10 @@ using UnityEngine;
 [RequireComponent(typeof(MyIdleInputHandler))]
 public class BackgroundManager : MyMonoBehaviour
 {
+    public float WaitUntilRotate = 1;
+
     private MyIdleInputHandler MyIdleInputHandler;
+    private float timeUntilRotate = float.NaN;
 
     protected override void Start()
     {
@@ -24,6 +27,19 @@ public class BackgroundManager : MyMonoBehaviour
 
     private void OnHitsWall()
     {
-        MyIdleInputHandler.Rotate = true;
+        timeUntilRotate = WaitUntilRotate;
+    }
+
+    private void Update()
+    {
+        if (!float.IsNaN(timeUntilRotate))
+        {
+            timeUntilRotate -= Time.deltaTime;
+            if (timeUntilRotate < 0)
+            {
+                MyIdleInputHandler.Rotate = true;
+                timeUntilRotate = float.NaN;
+            }
+        }
     }
 }
