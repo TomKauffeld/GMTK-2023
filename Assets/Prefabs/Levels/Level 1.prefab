@@ -259,7 +259,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Target: {fileID: 0}
-  rotateAmount: 30
+  rotateAmount: 90
 --- !u!114 &402484823547187441
 MonoBehaviour:
   m_ObjectHideFlags: 0
