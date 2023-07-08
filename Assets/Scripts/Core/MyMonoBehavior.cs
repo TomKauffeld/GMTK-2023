@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Assets.Scripts.Core.Inputs;
 using UnityEngine;
 
 namespace Assets.Scripts.Core
@@ -10,7 +6,7 @@ namespace Assets.Scripts.Core
     public class MyMonoBehavior : MonoBehaviour
     {
         private MyEventHandler myEventHandler;
-
+        private AMyInputHandler myInputHandler;
 
         protected MyEventHandler MyEventHandler
         {
@@ -20,6 +16,17 @@ namespace Assets.Scripts.Core
                     myEventHandler = FindObjectOfType<MyEventHandler>();
 
                 return myEventHandler;
+            }
+        }
+
+        protected AMyInputHandler MyInputHandler
+        {
+            get
+            {
+                if (myInputHandler == null)
+                    myInputHandler = FindObjectOfType<AMyInputHandler>();
+
+                return myInputHandler;
             }
         }
     }

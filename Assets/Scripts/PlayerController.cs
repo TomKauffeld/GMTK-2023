@@ -8,7 +8,6 @@ public class PlayerController : MonoBehaviour
     public MySensor ForwardSensor;
     public MySensor FeetSensor;
 
-
     private void FixedUpdate()
     {
         if (ForwardSensor != null && !ForwardSensor.InContact && FeetSensor != null && FeetSensor.InContact)
