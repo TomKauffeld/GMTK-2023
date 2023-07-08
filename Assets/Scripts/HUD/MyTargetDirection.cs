@@ -41,7 +41,7 @@ namespace Assets.Scripts.HUD
 
             Vector3 diff = targetPos - currentPos;
 
-            float angle = Vector3.Angle(Vector3.right, diff);
+            float angle = Vector3.SignedAngle(Vector3.right, diff, Vector3.forward);
 
             RectTransform.rotation = Quaternion.Euler(0, 0, angle);
 

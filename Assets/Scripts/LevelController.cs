@@ -12,10 +12,14 @@ public class LevelController : MyMonoBehaviour
     {
         Vector3 rotation = Vector3.zero;
 
-        if (MyInputHandler?.IsActionDown(Actions.ROTATE_RIGHT) ?? false)
-            rotation.z -= rotateAmount;
-        if (MyInputHandler?.IsActionDown(Actions.ROTATE_LEFT) ?? false)
-            rotation.z += rotateAmount;
+        if (MyInputHandler)
+        {
+            if (MyInputHandler.IsActionDown(Actions.ROTATE_RIGHT))
+                rotation.z -= rotateAmount;
+            if (MyInputHandler.IsActionDown(Actions.ROTATE_LEFT))
+                rotation.z += rotateAmount;
+        }
+
 
         if (rotation.sqrMagnitude > 0)
         {

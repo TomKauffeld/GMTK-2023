@@ -1,16 +1,22 @@
 ﻿using Assets.Scripts.Core;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Assets.Scripts.HUD
 {
     public class MyTargetManager : MyMonoBehaviour
     {
+        public const float TimeBetweenRefresh = 1f;
+
+
         public Transform Player;
         public MyTargetDirection TargetDirectionPrefab;
-        public List<MyTargetDirection> Directions = new();
-        public List<MyTarget> Targets = new();
+        private readonly List<MyTargetDirection> Directions = new();
+        private List<MyTarget> Targets = new();
+        private float timeUntilRefresh = TimeBetweenRefresh;
+
 
         protected override void Start()
         {
@@ -26,6 +32,16 @@ namespace Assets.Scripts.HUD
                 MyEventHandler.OnLevelLoaded -= OnLevelLoaded;
         }
 
+        private void Update()
+        {
+            timeUntilRefresh -= Time.deltaTime;
+            if (timeUntilRefresh <= 0)
+            {
+                UpdateTargets();
+                timeUntilRefresh += TimeBetweenRefresh;
+            }
+        }
+
         private void OnLevelLoaded(MyLevel obj)
         {
             UpdateTargets();
@@ -33,16 +49,16 @@ namespace Assets.Scripts.HUD
 
         public void UpdateTargets()
         {
-            Targets = FindObjectsOfType<MyTarget>().ToList();
+            Targets = FindObjectsOfType<MyTarget>().Where((MyTarget target) => !!target && !target.IsDestroyed()).ToList();
             UpdateTargetDirections();
         }
 
         public void UpdateTargetDirections()
         {
-            for (int i = 0; i < Directions.Count; ++i)
+            for (int i = 0; i < Directions.Count && i < Targets.Count; ++i)
                 Directions[i].Target = Targets[i];
 
-            for (int i =  Directions.Count; i < Targets.Count; ++i)
+            for (int i = Directions.Count; i < Targets.Count; ++i)
             {
                 Directions.Add(Instantiate(TargetDirectionPrefab, transform));
                 Directions[i].Player = Player;
@@ -50,7 +66,10 @@ namespace Assets.Scripts.HUD
             }
 
             for (int i = Directions.Count - 1; i >= Targets.Count; --i)
+            {
+                Destroy(Directions[i].gameObject);
                 Directions.RemoveAt(i);
+            }
         }
 
     }
