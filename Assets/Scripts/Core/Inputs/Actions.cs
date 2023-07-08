@@ -4,5 +4,6 @@
     {
         ROTATE_LEFT,
         ROTATE_RIGHT,
+        PAUSE,
     }
 }

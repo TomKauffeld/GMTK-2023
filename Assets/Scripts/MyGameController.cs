@@ -1,39 +1,54 @@
 using Assets.Scripts.Core;
+using Assets.Scripts.Core.Inputs;
 using Assets.Scripts.Player;
 using System;
 using System.Collections;
 using UnityEngine;
 
-public class MyGameController : MyMonoBehavior
+public class MyGameController : MyMonoBehaviour
 {
     public MyLevel[] Levels = Array.Empty<MyLevel>();
     public PlayerController Player;
     public Coroutine CurrentLevelLayout = null;
-    private Vector3 LastPos = Vector3.zero;
-
 
     public MyLevel LoadedLevel { get; private set; } = null;
     private int level = 0;
 
-    // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         MyEventHandler.OnLevelCompleted += OnLevelCompleted;
         MyEventHandler.OnLevelLoaded += OnLevelLoaded;
         LoadLevel(0);
+        MyEventHandler.Play();
+    }
+
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        if (MyEventHandler)
+        {
+            MyEventHandler.OnLevelCompleted -= OnLevelCompleted;
+            MyEventHandler.OnLevelLoaded -= OnLevelLoaded;
+        }
     }
 
     private void Update()
     {
-        if (LoadedLevel == null || LoadedLevel.Finished)
-            Player.transform.position = LastPos;
-        else
-            LastPos = Player.transform.position;
+        if (MyInputHandler.IsActionDown(Actions.PAUSE))
+        {
+            if (Paused)
+                MyEventHandler.Play();
+            else
+                MyEventHandler.Pause();
+        }
+
+        Player.Freeze = LoadedLevel == null || LoadedLevel.Finished || !LoadedLevel.Playing;
     }
 
     private void OnLevelCompleted(MyLevel level)
     {
-        MyEventHandler.ShowMessage("We Won");
         if (!LoadLevel(this.level + 1))
             MyEventHandler.CallOnGameFinished();
     }

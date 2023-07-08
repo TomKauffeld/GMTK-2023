@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.HUD
 {
-    public class MyMessage : MyMonoBehavior
+    public class MyMessage : MyMonoBehaviour
     {
         private TextMeshProUGUI TextMesh;
 
@@ -38,8 +38,9 @@ namespace Assets.Scripts.HUD
             Destroy(gameObject);
         }
 
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
             TextMesh = GetComponentInChildren<TextMeshProUGUI>();
             TextMesh.text = message.Text;
             Resize();
@@ -56,9 +57,24 @@ namespace Assets.Scripts.HUD
 
         private void Update()
         {
-            TimeOut -= Time.deltaTime;
-            if (TimeOut < 0)
-                message.CallDone();
+            if (!Paused)
+            {
+                TimeOut -= Time.deltaTime;
+                if (TimeOut < 0)
+                    message.CallDone();
+            }
+        }
+
+        protected override void OnPause()
+        {
+            base.OnPause();
+            gameObject.SetActive(false);
+        }
+
+        protected override void OnPlay()
+        {
+            base.OnPlay();
+            gameObject.SetActive(true);
         }
 
     }

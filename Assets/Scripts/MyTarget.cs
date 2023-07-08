@@ -2,7 +2,7 @@ using Assets.Scripts.Core;
 using Assets.Scripts.Player;
 using UnityEngine;
 
-public class MyTarget : MyMonoBehavior
+public class MyTarget : MyMonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {

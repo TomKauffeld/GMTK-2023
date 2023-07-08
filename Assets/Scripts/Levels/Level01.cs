@@ -8,6 +8,7 @@ public class Level01 : MyLevel
         yield return ShowMessage("Welcome to our game :)");
         yield return ShowMessage("The goal is to get the character to the end of the level");
         yield return ShowMessage("This is possible by rotating the level using the arrow keys");
+        StartPlaying();
 
 
         yield return WaitForEnd();

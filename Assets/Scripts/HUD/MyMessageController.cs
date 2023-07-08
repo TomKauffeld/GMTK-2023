@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 
 namespace Assets.Scripts.HUD
 {
-    public class MyMessageController : MyMonoBehavior
+    public class MyMessageController : MyMonoBehaviour
     {
         private readonly Queue<Message> MessageQueue = new Queue<Message>();
         private MyMessage CurrentMessage = null;

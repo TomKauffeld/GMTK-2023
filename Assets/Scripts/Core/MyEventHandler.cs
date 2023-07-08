@@ -15,6 +15,9 @@ namespace Assets.Scripts.Core
         public event Action<MyLevel> OnLevelCompleted;
         public event Action OnGameFinished;
 
+        public event Action OnPause;
+        public event Action OnPlay;
+
         public event Action<MyTarget, PlayerController> OnPlayerHitsTarget;
 
         public void ShowMessage(Message message)
@@ -48,6 +51,16 @@ namespace Assets.Scripts.Core
         public void CallOnGameFinished()
         {
             OnGameFinished?.Invoke();
+        }
+
+        public void Pause()
+        {
+            OnPause?.Invoke();
+        }
+
+        public void Play()
+        {
+            OnPlay?.Invoke();
         }
     }
 }

@@ -5,9 +5,10 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class MyLevel : MyMonoBehavior
+public class MyLevel : MyMonoBehaviour
 {
     public Transform PlayerSpawn;
+    public bool Playing { get; private set; } = false;
     public bool Finished { get; private set; } = false;
     public bool Win { get; private set; } = false;
 
@@ -21,6 +22,12 @@ public class MyLevel : MyMonoBehavior
         return null;
     }
 
+    protected void StartPlaying()
+    {
+        Playing = true;
+    }
+
+
     protected WaitForLevelFinish WaitForEnd()
     {
         return new WaitForLevelFinish(this);
@@ -28,13 +35,15 @@ public class MyLevel : MyMonoBehavior
 
     public virtual IEnumerator LevelLayout()
     {
+        StartPlaying();
         return WaitForEnd();
     }
 
 
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         Win = false;
         Finished = false;
         MyEventHandler.OnPlayerHitsTarget += OnPlayerHitsTarget;
@@ -50,8 +59,9 @@ public class MyLevel : MyMonoBehavior
     }
 
 
-    private void OnDestroy()
+    protected override void OnDestroy()
     {
+        base.OnDestroy();
         if (MyEventHandler != null && !MyEventHandler.IsDestroyed())
             MyEventHandler.OnPlayerHitsTarget -= OnPlayerHitsTarget;
     }
