@@ -3,10 +3,11 @@ using UnityEngine;
 
 namespace Assets.Scripts.Core
 {
-    public class MyMonoBehavior : MonoBehaviour
+    public class MyMonoBehaviour : MonoBehaviour
     {
         private MyEventHandler myEventHandler;
         private AMyInputHandler myInputHandler;
+        public bool Paused { get; private set; } = false;
 
         protected MyEventHandler MyEventHandler
         {
@@ -28,6 +29,36 @@ namespace Assets.Scripts.Core
 
                 return myInputHandler;
             }
+        }
+
+
+
+        protected virtual void Start()
+        {
+            if (MyEventHandler)
+            {
+                MyEventHandler.OnPause += OnPause;
+                MyEventHandler.OnPlay += OnPlay;
+            }
+        }
+
+        protected virtual void OnDestroy()
+        {
+            if (MyEventHandler)
+            {
+                MyEventHandler.OnPause -= OnPause;
+                MyEventHandler.OnPlay -= OnPlay;
+            }
+        }
+
+        protected virtual void OnPlay()
+        {
+            Paused = false;
+        }
+
+        protected virtual void OnPause()
+        {
+            Paused = true;
         }
     }
 }
