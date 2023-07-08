@@ -35,8 +35,11 @@ namespace Assets.Scripts.Core
 
         protected virtual void Start()
         {
-            MyEventHandler.OnPause += OnPause;
-            MyEventHandler.OnPlay += OnPlay;
+            if (MyEventHandler)
+            {
+                MyEventHandler.OnPause += OnPause;
+                MyEventHandler.OnPlay += OnPlay;
+            }
         }
 
         protected virtual void OnDestroy()

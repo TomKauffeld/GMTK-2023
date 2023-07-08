@@ -5,18 +5,18 @@ namespace Assets.Scripts.HUD
 {
     public class MyPauseMenuController : MyMonoBehaviour
     {
-        public GameObject PauseMenu;
+        public MyMenuManager PauseMenu;
 
         protected override void OnPause()
         {
             base.OnPause();
-            PauseMenu.SetActive(true);
+            PauseMenu.ChangeMenu(1);
         }
 
         protected override void OnPlay()
         {
             base.OnPlay();
-            PauseMenu.SetActive(false);
+            PauseMenu.ChangeMenu(0);
         }
     }
 }
