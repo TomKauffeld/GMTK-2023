@@ -1,14 +1,11 @@
-﻿using System;
+﻿using Assets.Scripts.Core;
 using TMPro;
 using UnityEngine;
 
 namespace Assets.Scripts.HUD
 {
-    public class MyMessage : MonoBehaviour
+    public class MyMessage : MyMonoBehavior
     {
-        public event Action<Message> OnMessageDone;
-
-
         private TextMeshProUGUI TextMesh;
 
         private Message message;
@@ -38,7 +35,6 @@ namespace Assets.Scripts.HUD
 
         private void MessageDone(Message message)
         {
-            OnMessageDone?.Invoke(message);
             Destroy(gameObject);
         }
 

@@ -17,38 +17,37 @@ namespace Assets.Scripts.HUD
             MyEventHandler.OnMessage += ShowMessage;
         }
 
+
         private void OnDisable()
         {
             if (MyEventHandler != null && !MyEventHandler.IsDestroyed())
                 MyEventHandler.OnMessage -= ShowMessage;
         }
 
+        private void Update()
+        {
+            ShowNextMessage();
+        }
+
         private void ShowNextMessage(bool force = false)
         {
-            if (CurrentMessage != null && !force)
+            if (CurrentMessage != null && !CurrentMessage.IsDestroyed() && !force)
                 return;
 
 
             if (MessageQueue.TryDequeue(out Message message))
             {
-                if (CurrentMessage)
+                if (CurrentMessage != null && !CurrentMessage.IsDestroyed())
                     Destroy(CurrentMessage.gameObject);
 
                 CurrentMessage = Instantiate(MessagePrefab, transform);
                 CurrentMessage.Message = message;
-                CurrentMessage.OnMessageDone += OnMessageDone;
             }
-        }
-
-        private void OnMessageDone(Message message)
-        {
-            ShowNextMessage();
         }
 
         public void ShowMessage(Message message)
         {
             MessageQueue.Enqueue(message);
-            ShowNextMessage();
         }
 
         public void ShowMessage(string message, float timeout = 5)
