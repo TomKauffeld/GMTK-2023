@@ -14,6 +14,8 @@ public class MyGameController : MyMonoBehaviour
     public MyLevel LoadedLevel { get; private set; } = null;
     private int level = 0;
 
+    public int overrideLevel = 0;
+
     protected override void Start()
     {
         base.Start();
@@ -49,6 +51,11 @@ public class MyGameController : MyMonoBehaviour
 
     private void Update()
     {
+        if (level != overrideLevel)
+        {
+            LoadLevel(overrideLevel);
+        }
+
         if (MyInputHandler.IsActionDown(Actions.PAUSE))
         {
             if (Paused)
@@ -75,6 +82,7 @@ public class MyGameController : MyMonoBehaviour
         {
             LoadLevel(Levels[level]);
             this.level = level;
+            overrideLevel = level;
             MySettings.NextLevel = level;
             return true;
         }
