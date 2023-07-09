@@ -31,7 +31,9 @@ public class MyGameController : MyMonoBehaviour
 
     private IEnumerator DisplayEndGame()
     {
-        yield return new WaitForMessage(MyEventHandler.ShowMessage("You finished the game, sadly we don't have any more levels"));
+        yield return new WaitForMessage(MyEventHandler.ShowMessage("You finished the game :)", 2));
+        yield return new WaitForMessage(MyEventHandler.ShowMessage("Sadly we don't have anymore levels", 2));
+        yield return new WaitForMessage(MyEventHandler.ShowMessage("Thanks for playing :)"));
         MyEventHandler.LoadMainMenu();
     }
 
