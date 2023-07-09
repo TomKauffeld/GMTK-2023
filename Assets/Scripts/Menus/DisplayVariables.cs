@@ -26,8 +26,7 @@ namespace Assets.Scripts.Menus
         private void Start()
         {
             BaseTextField = GetComponent<TMP_Text>();
-            if (source != null)
-                source = BaseTextField.text;
+            source ??= BaseTextField.text;
 
             Variables.Add("UnityVersion", Application.unityVersion);
             Variables.Add("ApplicationVersion", Application.version);
@@ -39,6 +38,7 @@ namespace Assets.Scripts.Menus
 
         public void UpdateText()
         {
+            source ??= BaseTextField.text;
             string text = source;
             foreach (KeyValuePair<string, string> variable in Variables)
             {
