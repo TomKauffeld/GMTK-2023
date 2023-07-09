@@ -1,6 +1,7 @@
 using Assets.Scripts.Core;
 using Assets.Scripts.Levels;
 using Assets.Scripts.Player;
+using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -12,6 +13,10 @@ public class MyLevel : MyMonoBehaviour
     public bool Finished { get; private set; } = false;
     public bool Win { get; private set; } = false;
 
+
+    public string Name;
+
+    private Quaternion InitialRotation;
 
     protected WaitForMessage ShowMessage(string message, float timeout = 5, bool evenIfFinished = false)
     {
@@ -39,14 +44,27 @@ public class MyLevel : MyMonoBehaviour
         return WaitForEnd();
     }
 
+    public bool IsInsideBounds(Vector3 point)
+    {
+        return (transform.position - point).sqrMagnitude < 100 * 100;
+    }
+
+    public void CheckPlayerBounds(Vector3 player)
+    {
+        if (Finished || IsInsideBounds(player))
+            return;
+        Win = false;
+        Finished = true;
+    }
+
 
 
     protected override void Start()
     {
         base.Start();
-        Win = false;
-        Finished = false;
+        InitialRotation = transform.rotation;
         MyEventHandler.OnPlayerHitsTarget += OnPlayerHitsTarget;
+        ResetLevel();
     }
 
     private void OnPlayerHitsTarget(MyTarget target, PlayerController player)
@@ -64,5 +82,13 @@ public class MyLevel : MyMonoBehaviour
         base.OnDestroy();
         if (MyEventHandler != null && !MyEventHandler.IsDestroyed())
             MyEventHandler.OnPlayerHitsTarget -= OnPlayerHitsTarget;
+    }
+
+    public void ResetLevel()
+    {
+        Finished = false;
+        Win = false;
+        Playing = false;
+        transform.rotation = InitialRotation;
     }
 }

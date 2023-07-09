@@ -619,6 +619,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerSpawn: {fileID: 556190454511313947}
+  Name: 3
 --- !u!1 &4924604296246176002
 GameObject:
   m_ObjectHideFlags: 0

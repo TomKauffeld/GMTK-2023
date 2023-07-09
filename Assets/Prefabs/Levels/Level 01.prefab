@@ -185,6 +185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerSpawn: {fileID: 556190454511313947}
+  Name: 1
 --- !u!114 &2493302817182165362
 MonoBehaviour:
   m_ObjectHideFlags: 0

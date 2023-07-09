@@ -56,6 +56,9 @@ public class MyGameController : MyMonoBehaviour
         }
 
         Player.Freeze = LoadedLevel == null || LoadedLevel.Finished || !LoadedLevel.Playing;
+
+        if (LoadedLevel != null && LoadedLevel.Playing && !LoadedLevel.Finished && !Player.Freeze)
+            LoadedLevel.CheckPlayerBounds(Player.transform.position);
     }
 
     private void OnLevelCompleted(MyLevel level)
@@ -100,16 +103,28 @@ public class MyGameController : MyMonoBehaviour
     {
         do
         {
+            level.ResetLevel();
+
+
             if (LoadedLevel.TryGetComponent(out LevelController levelController))
                 levelController.Target = Player.transform;
+
             Player.transform.position = LoadedLevel.PlayerSpawn.position;
+
             if (Player.TryGetComponent(out Rigidbody rigidbody))
                 ResetRigidBody(rigidbody);
+
+
             Player.gameObject.SetActive(true);
+
+            yield return new WaitForMessage(MyEventHandler.ShowMessage("Level " + level.Name));
+
             yield return StartCoroutine(level.LevelLayout());
         }
         while (!level.Win);
-        MyEventHandler?.CallOnLevelCompleted(level);
+
+        if (MyEventHandler)
+            MyEventHandler.CallOnLevelCompleted(level);
     }
 
     private void ResetRigidBody(Rigidbody rigidbody)
